@@ -25,4 +25,4 @@ Dev mode can be configured with argument `--dev`
 - `--v`: Verbose Mode(Not Implemented yet)
 - `--e`: Execute(If dev mode is activated and Execute is not configured, then it will just search and not run)
 - `--s <iteration>`: Summarize Searching Algorithms
--- Summary mode makes excel file in current directory, which summarizes multiple runs with every searching algorithm.
+  - Summary mode makes excel file in current directory, which summarizes multiple runs with every searching algorithm.
