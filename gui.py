@@ -159,10 +159,10 @@ class App(QWidget):
         status_score_layout.addWidget(self.status_display)
         right_panel.addWidget(status_score_frame)
         
-        action_controls_frame = QFrame()
-        action_controls_frame.setObjectName('action-controls-frame')
-        action_controls_layout = QVBoxLayout(action_controls_frame)
-        action_controls_frame.setFixedHeight(220)
+        self.action_controls_frame = QFrame()
+        self.action_controls_frame.setObjectName('action-controls-frame')
+        action_controls_layout = QVBoxLayout(self.action_controls_frame)
+        self.action_controls_frame.setFixedHeight(220)
         algo_layout = QHBoxLayout()
         self.algo_label = QLabel("Algorithm:")
         algo_layout.addWidget(self.algo_label)
@@ -173,6 +173,7 @@ class App(QWidget):
         action_controls_layout.addLayout(algo_layout)
         
         self.search_params_group = QGroupBox("Search Parameters")
+        self.search_params_group.setFixedHeight(70)
         self.search_params_layout = QGridLayout()
         self.search_params_group.setLayout(self.search_params_layout)
         
@@ -218,7 +219,7 @@ class App(QWidget):
         self.run_button.clicked.connect(self.on_run)
         action_controls_layout.addWidget(self.search_button)
         action_controls_layout.addWidget(self.run_button)
-        right_panel.addWidget(action_controls_frame)
+        right_panel.addWidget(self.action_controls_frame)
 
         difficulty_frame = QFrame()
         difficulty_frame.setObjectName('difficulty-frame')
@@ -259,6 +260,14 @@ class App(QWidget):
         self.n_iteration_label.setVisible(is_h_iteration)
         self.guess_limit_spin.setVisible(is_other_iterative)
         self.guess_limit_label.setVisible(is_other_iterative)
+        
+        
+        if is_h_iteration:
+            self.action_controls_frame.setFixedHeight(250)
+            self.search_params_group.setFixedHeight(100)
+        else:
+            self.action_controls_frame.setFixedHeight(220)
+            self.search_params_group.setFixedHeight(70)
 
     def apply_theme(self, theme_name):
         self.current_theme = theme_name
@@ -344,11 +353,6 @@ class App(QWidget):
             argument['n_iteration'] = self.n_iteration_spin.value()
         else:
             argument['max_iteration' if solver_name == 'r-iteration' else 'guess_limit'] = self.guess_limit_spin.value()
-
-        if solver_name == 'h-iteration':
-            self.action_controls_frame.setFixedHeight(400)
-        else:
-            self.action_controls_frame.setFixedHeight(220)
 
         self.solver_thread = SolverThread(search_func, argument)
         self.solver_thread.result_ready.connect(self.on_search_complete)
