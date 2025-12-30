@@ -8,6 +8,7 @@ from PyQt6.QtGui import QFont, QColor
 from search import iterative_solver, h_iteration_solver, r_iteration_solver, exhaustive_solver, n_iterative_solver
 
 from core import scan, solve, restart_game
+from util import send_data
 
 class EmittingStream(QObject):
     textWritten = pyqtSignal(str)
@@ -316,7 +317,7 @@ class App(QWidget):
             self.grid_layout.itemAt(i).widget().setParent(None)
 
         self.initial_grid, _, _, self.pos_dict = scan()
-        print(self.initial_grid)
+        send_data(str(self.initial_grid))
 
         if self.initial_grid and any(any(row) for row in self.initial_grid):
             for r, row_data in enumerate(self.initial_grid):
