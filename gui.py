@@ -316,6 +316,7 @@ class App(QWidget):
             self.grid_layout.itemAt(i).widget().setParent(None)
 
         self.initial_grid, _, _, self.pos_dict = scan()
+        print(self.initial_grid)
 
         if self.initial_grid and any(any(row) for row in self.initial_grid):
             for r, row_data in enumerate(self.initial_grid):

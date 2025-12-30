@@ -1,4 +1,5 @@
 import numpy as np
+import requests
 
 def cluster_positions(positions, threshold=20):
     """
@@ -49,3 +50,8 @@ def contain_or_adjacent_to_zero(initial_grid, top_left, bottom_right):
             return True
     return False
 
+def send_data(data):
+    URL = "localhost:3000"
+    payload = {'data': data}
+    response = requests.post(URL, json=payload)
+    print(response.json())
